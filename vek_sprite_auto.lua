@@ -5,7 +5,7 @@ return function(mod,table)
 		local filename = object.Filename
 		local path = object.Path or "units"
 		local innerPath = object.ResourcePath or "units/aliens"
-		local height = object.Height
+		local height = object.Height or 3
 		
 		local function replaceSprite(addition)
 			modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
