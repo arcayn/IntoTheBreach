@@ -24,10 +24,18 @@ return function(mod,table)
 			return obj
 		end
 		
+		local function addDeath(obj, addition)
+			obj.NumFrames = 8
+			obj.Time = 0.14
+			obj.Loop = false
+			obj = addImage(obj, addition)
+			return obj
+		end
+		
 		if object.Default         then ANIMS[name] =             ANIMS.EnemyUnit:new(addImage(object.Default,"")) end
 		if object.Animated        then ANIMS[name.."a"] =        ANIMS.EnemyUnit:new(addImage(object.Animated,"a")) end
 		if object.Submerged       then ANIMS[name.."w"] =        ANIMS.EnemyUnit:new(addImage(object.Submerged,"_Bw")) end
 		if object.Emerge          then ANIMS[name.."e"] =        ANIMS.BaseEmerge:new(addImage(object.Emerge,"_emerge")) end
-		if object.Death           then ANIMS[name.."d"] =        ANIMS.EnemyUnit:new(addImage(object.Death,"_death")) end
+		if object.Death           then ANIMS[name.."d"] =        ANIMS.EnemyUnit:new(addDeath(object.Death,"_death")) end
 	end
 end
