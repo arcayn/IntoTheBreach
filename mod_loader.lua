@@ -1,3 +1,8 @@
+--[[
+	ALL CREDIT GOES TO CYBERBOY2000 TO ACTUALLY WRITING THIS CODE
+]]--
+
+
 --lfs = require("lfs")
 mod_loader = {}
 
@@ -13,6 +18,8 @@ function mod_loader:init()
 	local orderedMods = self:orderMods(self:getModContentDefaults(),savedOrder)
 	
 	for i, id in ipairs(orderedMods) do	
+	
+		-- MY STUFF --
 		local newReqs = self.mods[id].HardReqs or { }
 		for k, nid in ipairs(orderedMods) do
 			if newReqs[nid] then
@@ -39,6 +46,9 @@ function mod_loader:init()
 			end
 			LOG(string.format("The compatibility requirements of mod %s are not met. Initialization failed",self.mods[id].name))
 		end
+		
+		-- END OF MY STUFF --
+		
 	end
 	
 	modApi:finalize()
