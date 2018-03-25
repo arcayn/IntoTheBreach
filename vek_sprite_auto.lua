@@ -25,9 +25,9 @@ return function(mod,table)
 		end
 		
 		local function addDeath(obj, addition)
-			obj.NumFrames = 8
-			obj.Time = 0.14
-			obj.Loop = false
+			obj.NumFrames = obj.NumFrames or 8
+			obj.Time = obj.Time or 0.14
+			obj.Loop = obj.Loop or false
 			obj = addImage(obj, addition)
 			return obj
 		end
