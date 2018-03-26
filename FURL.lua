@@ -105,9 +105,7 @@ local function addAnim(mod, object)
 	local baseAnim = object.Base or "Animation"
 	
 	local function replaceSprite(addition)
-		if not path == "" then path = path.."/" end
-		if not innerPath == "" then innerPath = innerPath.."/" end
-		modApi:appendAsset("img/"..innerPath..filename..addition..".png",mod.resourcePath.."/"..path..filename..addition..".png")
+		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
 	
 	replaceSprite("")
@@ -127,9 +125,7 @@ local function addResource(mod, object)
 	local innerPath = object.ResourcePath or ""
 	
 	local function replaceSprite(addition)
-				if not path == "" then path = path.."/" end
-		if not innerPath == "" then innerPath = innerPath.."/" end
-		modApi:appendAsset("img/"..innerPath..filename..addition..".png",mod.resourcePath.."/"..path..filename..addition..".png")
+		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
 	
 	replaceSprite("")
@@ -147,10 +143,14 @@ local function loadColors(mod, object)
 	table.insert(newColor, GL_Color(object.PlateShadow[1],object.PlateShadow[2],object.PlateShadow[3]))
 	table.insert(newColor, GL_Color(object.BodyColor[1],object.BodyColor[2],object.BodyColor[3]))
 	table.insert(newColor, GL_Color(object.BodyHighlight[1],object.BodyHighlight[2],object.BodyHighlight[3]))
-	table.insert(color_maps, newColor)
+	--table.insert(color_maps, newColor)
+	InsertColor(newColor)
 	--require("scripts/animations")
 	reloadAnims()
-	if object.PawnLocation then require(object.PawnLocation) end
+	if object.PawnLocation then 
+		local pawnloc = object.PawnLocation
+		require(pawnloc)
+	end
 end
 	
 	
