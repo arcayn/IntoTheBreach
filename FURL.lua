@@ -90,6 +90,7 @@ function setUpMech(mod, object)
 	if object.Broken          then ANIMS[name.."_broken"] =  ANIMS.MechUnit:new(addImage(object.Broken,"_broken")) end
 	if object.SubmergedBroken then ANIMS[name.."w_broken"] = ANIMS.MechUnit:new(addImage(object.SubmergedBroken,"_w_broken")) end
 	if object.Icon            then ANIMS[name.."_ns"] =      ANIMS.MechIcon:new(addImage(object.Icon,"_ns")) end
+	if object.Death           then ANIMS[name.."d"] =        ANIMS.EnemyUnit:new(addDeath(object.Death,"_death")) end
 end
 
 local function addAnim(mod, object)
