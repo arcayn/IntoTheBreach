@@ -1,3 +1,18 @@
+function reloadAnims()
+	for i,v in pairs(ANIMS) do
+		if type(v) == "table" then
+			if v.Height then
+				if v.Height == GetColorCount() - 1 then
+					if v.IsVek then local foo = "foo"
+					else
+						v.Height = GetColorCount()
+					end
+				end
+			end
+		end
+	end
+end
+
 
 function setUpVek(mod,object)
 	local name = object.Name
@@ -22,6 +37,7 @@ function setUpVek(mod,object)
 		if obj == nil then obj = {} end
 		obj.Image = innerPath.."/"..filename..addition..".png"
 		obj.Height = height
+		obj.IsVek = true
 		return obj
 	end
 	
@@ -123,7 +139,6 @@ function loadColors(mod, object)
 	local name = object.Name
 	local pawnfile = object.PawnLocation
 	FURL_COLORS[name] = GetColorCount()
-	
 	table.insert(newColor, GL_Color(object.PlateHighlight[1],object.PlateHighlight[2],object.PlateHighlight[3]))
 	table.insert(newColor, GL_Color(object.PlateLight[1],object.PlateLight[2],object.PlateLight[3]))
 	table.insert(newColor, GL_Color(object.PlateMid[1],object.PlateMid[2],object.PlateMid[3]))
@@ -133,7 +148,8 @@ function loadColors(mod, object)
 	table.insert(newColor, GL_Color(object.BodyColor[1],object.BodyColor[2],object.BodyColor[3]))
 	table.insert(newColor, GL_Color(object.BodyHighlight[1],object.BodyHighlight[2],object.BodyHighlight[3]))
 	table.insert(color_maps, newColor)
-	require("scripts/animations")	
+	--require("scripts/animations")
+	reloadAnims()
 	require(pawnfile)
 end
 	
