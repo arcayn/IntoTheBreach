@@ -150,7 +150,7 @@ local function loadColors(mod, object)
 	table.insert(color_maps, newColor)
 	--require("scripts/animations")
 	reloadAnims()
-	if self.PawnLocation then require(self.PawnLocation) end
+	if object.PawnLocation then require(object.PawnLocation) end
 end
 	
 	
