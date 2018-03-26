@@ -1,4 +1,4 @@
-function reloadAnims()
+local function reloadAnims()
 	for i,v in pairs(ANIMS) do
 		if type(v) == "table" then
 			if v.Height then
@@ -14,7 +14,7 @@ function reloadAnims()
 end
 
 
-function setUpVek(mod,object)
+local function setUpVek(mod,object)
 	local name = object.Name
 	local filename = object.Filename
 	local path = object.Path or "units"
@@ -92,7 +92,7 @@ function setUpMech(mod, object)
 	if object.Icon            then ANIMS[name.."_ns"] =      ANIMS.MechIcon:new(addImage(object.Icon,"_ns")) end
 end
 
-function addAnim(mod, object)
+local function addAnim(mod, object)
 	local name = object.Name
 	object.Name = nil
 	local filename = object.Filename
@@ -120,7 +120,7 @@ function addAnim(mod, object)
 	ANIMS[name] =  ANIMS[baseAnim]:new(addImage(object,""))
 end
 
-function addResource(mod, object)
+local function addResource(mod, object)
 	local filename = object.Filename
 	local path = object.Path or ""
 	local innerPath = object.ResourcePath or ""
@@ -134,7 +134,7 @@ function addResource(mod, object)
 	replaceSprite("")
 end
 	
-function loadColors(mod, object)
+local function loadColors(mod, object)
 	local newColor = {}
 	local name = object.Name
 	local pawnfile = object.PawnLocation
