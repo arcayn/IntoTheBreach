@@ -138,7 +138,6 @@ end
 local function loadColors(mod, object)
 	local newColor = {}
 	local name = object.Name
-	local pawnfile = object.PawnLocation
 	FURL_COLORS[name] = GetColorCount()
 	table.insert(newColor, GL_Color(object.PlateHighlight[1],object.PlateHighlight[2],object.PlateHighlight[3]))
 	table.insert(newColor, GL_Color(object.PlateLight[1],object.PlateLight[2],object.PlateLight[3]))
@@ -151,7 +150,7 @@ local function loadColors(mod, object)
 	table.insert(color_maps, newColor)
 	--require("scripts/animations")
 	reloadAnims()
-	require(pawnfile)
+	if self.PawnLocation then require(self.PawnLocation) end
 end
 	
 	
