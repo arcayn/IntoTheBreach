@@ -1,3 +1,28 @@
+local color_maps = {}
+
+local x = 0
+local z = true
+
+while z do
+	x = x + 1
+	local newColor = GetColorMap(x)
+	if newColor == nil then
+		z = false
+	else
+		LOG(x)
+		table.insert(color_maps, newColor)
+	end
+end
+
+function GetColorCount()
+	return #color_maps
+end
+
+function GetColorMap(id)
+	return color_maps[id]
+end
+
+
 local function reloadAnims()
 	for i,v in pairs(ANIMS) do
 		if type(v) == "table" then
@@ -143,8 +168,8 @@ local function loadColors(mod, object)
 	table.insert(newColor, GL_Color(object.PlateShadow[1],object.PlateShadow[2],object.PlateShadow[3]))
 	table.insert(newColor, GL_Color(object.BodyColor[1],object.BodyColor[2],object.BodyColor[3]))
 	table.insert(newColor, GL_Color(object.BodyHighlight[1],object.BodyHighlight[2],object.BodyHighlight[3]))
-	--table.insert(color_maps, newColor)
-	InsertColor(newColor)
+	table.insert(color_maps, newColor)
+	--InsertColor(newColor)
 	--require("scripts/animations")
 	reloadAnims()
 	if object.PawnLocation then 
