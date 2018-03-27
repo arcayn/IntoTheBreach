@@ -1,8 +1,8 @@
-local color_maps = {}
+-- GENERATE A LOCAL COLOR MAPS LIST
 
+local color_maps = {}
 local x = 0
 local z = true
-
 while z do
 	x = x + 1
 	local newColor = GetColorMap(x)
@@ -14,14 +14,16 @@ while z do
 	end
 end
 
+-- OVERRIDE THE CURRENT FUNCTIONS
+
 function GetColorCount()
 	return #color_maps
 end
-
 function GetColorMap(id)
 	return color_maps[id]
 end
 
+-- RELOAD ANIMATIONS TO ACCOMMODATE ADDED COLOR SCHEMES
 
 local function reloadAnims()
 	for i,v in pairs(ANIMS) do
@@ -38,18 +40,25 @@ local function reloadAnims()
 	end
 end
 
+-- GENERATE VEK SPRITES
 
 local function setUpVek(mod,object)
+
+	-- LOCALISE
+
 	local name = object.Name
 	local filename = object.Filename
 	local path = object.Path or "units"
 	local innerPath = object.ResourcePath or "units/aliens"
 	local height = object.Height or 3
 	
+	-- SET UP RESOURCE LOADING
+	
 	local function replaceSprite(addition)
 		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
 	
+	-- LOAD
 	
 	if object.Default then replaceSprite("") end
 	if object.Animated then replaceSprite("a") end
@@ -57,6 +66,7 @@ local function setUpVek(mod,object)
 	if object.Death then replaceSprite("_death") end
 	if object.Submerged then replaceSprite("_Bw") end
 	
+	-- MODIFY THE OBJECTS PASSED
 	
 	local function addImage(obj, addition)
 		if obj == nil then obj = {} end
@@ -74,6 +84,8 @@ local function setUpVek(mod,object)
 		return obj
 	end
 	
+	-- LOAD ANIMATIONS
+	
 	if object.Default         then ANIMS[name] =             ANIMS.EnemyUnit:new(addImage(object.Default,"")) end
 	if object.Animated        then ANIMS[name.."a"] =        ANIMS.EnemyUnit:new(addImage(object.Animated,"a")) end
 	if object.Submerged       then ANIMS[name.."w"] =        ANIMS.EnemyUnit:new(addImage(object.Submerged,"_Bw")) end
@@ -81,15 +93,24 @@ local function setUpVek(mod,object)
 	if object.Death           then ANIMS[name.."d"] =        ANIMS.EnemyUnit:new(addDeath(object.Death,"_death")) end
 end
 
+-- SET UP MECH SPRITES
+
 function setUpMech(mod, object)
+
+	-- LOCALISE
+
 	local name = object.Name
 	local filename = object.Filename
 	local path = object.Path or "units"
 	local innerPath = object.ResourcePath or "units/player"
 	
+	-- SET UP RESOURCE LOADING
+	
 	local function replaceSprite(addition)
 		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
+	
+	-- LOAD
 	
 	if object.Default then replaceSprite("") end
 	if object.Animated then replaceSprite("_a") end
@@ -100,13 +121,15 @@ function setUpMech(mod, object)
 	if object.Submerged then replaceSprite("_w") end
 	if object.SubmergedBroken then replaceSprite("_w_broken") end
 	
-	
+	-- MODIFY OBJECTS
 	
 	local function addImage(obj, addition)
 		if obj == nil then obj = {} end
 		obj.Image = innerPath.."/"..filename..addition..".png"
 		return obj
 	end
+	
+	-- LOAD ANIMATIONS
 	
 	if object.Default         then ANIMS[name] =             ANIMS.MechUnit:new(addImage(object.Default,"")) end
 	if object.Animated        then ANIMS[name.."a"] =        ANIMS.MechUnit:new(addImage(object.Animated,"_a")) end
@@ -118,7 +141,12 @@ function setUpMech(mod, object)
 	if object.Death           then ANIMS[name.."d"] =        ANIMS.EnemyUnit:new(addDeath(object.Death,"_death")) end
 end
 
+-- ADD GENERIC ANIMATIONS
+
 local function addAnim(mod, object)
+
+	-- LOCALISE AND REMOVE IRRELEVANT VARIABLES
+
 	local name = object.Name
 	object.Name = nil
 	local filename = object.Filename
@@ -129,11 +157,17 @@ local function addAnim(mod, object)
 	object.innerPath = nil
 	local baseAnim = object.Base or "Animation"
 	
+	-- SET UP LOADING
+	
 	local function replaceSprite(addition)
 		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
 	
+	-- LOAD
+	
 	replaceSprite("")
+	
+	-- MODIFY OBJECCT
 	
 	local function addImage(obj, addition)
 		if obj == nil then obj = {} end
@@ -141,25 +175,47 @@ local function addAnim(mod, object)
 		return obj
 	end
 	
+	-- LOAD ANIMATION
+	
 	ANIMS[name] =  ANIMS[baseAnim]:new(addImage(object,""))
 end
 
+-- PRETTIFIED VERSION OF MODAPI:APPENDASSET()
+
 local function addResource(mod, object)
+
+	-- LOCALISE
+
 	local filename = object.Filename
 	local path = object.Path or ""
 	local innerPath = object.ResourcePath or ""
+	
+	-- SET UP LOADING
 	
 	local function replaceSprite(addition)
 		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
 	end
 	
+	-- LOAD
+	
 	replaceSprite("")
 end
+
+-- GENERATE NEW COLOR PALETTES
 	
 local function loadColors(mod, object)
+
+	-- LOCALISE
+
 	local newColor = {}
 	local name = object.Name
+	
+	-- UPDATE COLOR IDS TABLE
+	
 	FURL_COLORS[name] = GetColorCount()
+	
+	-- GENERATE PALETTE TABLE FROM PASSED VARIABLES
+	
 	table.insert(newColor, GL_Color(object.PlateHighlight[1],object.PlateHighlight[2],object.PlateHighlight[3]))
 	table.insert(newColor, GL_Color(object.PlateLight[1],object.PlateLight[2],object.PlateLight[3]))
 	table.insert(newColor, GL_Color(object.PlateMid[1],object.PlateMid[2],object.PlateMid[3]))
@@ -168,19 +224,35 @@ local function loadColors(mod, object)
 	table.insert(newColor, GL_Color(object.PlateShadow[1],object.PlateShadow[2],object.PlateShadow[3]))
 	table.insert(newColor, GL_Color(object.BodyColor[1],object.BodyColor[2],object.BodyColor[3]))
 	table.insert(newColor, GL_Color(object.BodyHighlight[1],object.BodyHighlight[2],object.BodyHighlight[3]))
+	
+	-- INSERT NEW PALETTE TABLE
+	
 	table.insert(color_maps, newColor)
-	--InsertColor(newColor)
-	--require("scripts/animations")
+	
+	-- RELOAD ALL ANIMATIONS
+	
 	reloadAnims()
-	if object.PawnLocation then 
+	
+	-- RELOAD PAWNS (IN THEORY - DON'T KNOW WHY THIS DOESN'T WORK. FOR NOW PAWN SCRIPTS WILL HAVE TO BE LOADED AFTER FUR SCRIPTS)
+	
+	--[[if object.PawnLocation then 
 		local pawnloc = object.PawnLocation
 		require(pawnloc)
-	end
+	end]]--
+	
+	
 end
 	
+-- MAIN FUNCTION
 	
 return function(mod,table)
+
+	-- INITIALISE COLOR PALETTE TABLE
+
 	if FURL_COLORS == nil then FURL_COLORS = {} end
+	
+	-- RUN RELEVANT FUNCTIONS
+	
 	for i=1,#table do
 		local object = table[i]
 		local animType = object.Type or "null"
