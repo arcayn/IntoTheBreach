@@ -66,6 +66,15 @@ local function setUpVek(mod,object)
 	if object.Death then replaceSprite("_death") end
 	if object.Submerged then replaceSprite("_Bw") end
 	
+	if object.Portrait then 
+		if object.PawnName then
+			modApi:appendAsset("img/"..innerPath.."/"..object.PawnName.."1.png",mod.resourcePath.."/portraits/enemy/"..object.PawnName.."1.png") 
+		end
+		if object.HasAlpha then
+			modApi:appendAsset("img/"..innerPath.."/"..object.PawnName.."2.png",mod.resourcePath.."/portraits/enemy/"..object.PawnName.."2.png")
+		end
+	end
+	
 	-- MODIFY THE OBJECTS PASSED
 	
 	local function addImage(obj, addition)
@@ -242,6 +251,30 @@ local function loadColors(mod, object)
 	
 	
 end
+
+-- SET UP PILOT PORTRAITS
+
+local function addPilot(mod, object)
+
+	-- LOCALISE
+
+	local filename = object.PilotID
+	local path = object.Path or ""
+	local pathAdd = object.ResourcePath or "pilots"
+	local innerPath = "portraits/"..pathAdd
+	
+	-- SET UP LOADING
+	
+	local function replaceSprite(addition)
+		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
+	end
+	
+	-- LOAD
+	
+	replaceSprite("")
+	replaceSprite("_2")
+	replaceSprite("_blink")
+end
 	
 -- MAIN FUNCTION
 	
@@ -266,6 +299,8 @@ return function(mod,table)
 			addResource(mod, object)
 		elseif animType == "color" then
 			loadColors(mod, object)
+		elseif animType == "pilot" then
+			addPilot(mod, object)
 		else
 			LOG("Error: missing or invalid type value")
 		end
