@@ -68,10 +68,23 @@ local function setUpVek(mod,object)
 	
 	if object.Portrait then 
 		if object.Portrait then
-			modApi:appendAsset("img/"..innerPath.."/"..object.Portrait.."1.png",mod.resourcePath.."/portraits/enemy/"..object.Portrait.."1.png") 
+			modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."1.png",mod.resourcePath.."/"..path.."/"..object.Portrait..".png") 
 		end
 		if object.HasAlpha then
-			modApi:appendAsset("img/"..innerPath.."/"..object.Portrait.."2.png",mod.resourcePath.."/portraits/enemy/"..object.Portrait.."2.png")
+			if object.HasAlpha == 1 then
+				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."2.png",mod.resourcePath.."/"..path.."/"..object.Portrait.."_alpha.png")
+			else
+				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."2.png",mod.resourcePath.."/"..path.."/"..object.Portrait..".png")
+			end
+		end
+		if object.HasBoss then
+			if object.HasBoss == 2 then
+				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait.."_boss.png")
+			elseif object.HasBoss == 1 then
+				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait.."_alpha.png")
+			else
+				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait..".png")
+			end
 		end
 	end
 	
