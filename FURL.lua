@@ -66,6 +66,8 @@ local function setUpVek(mod,object)
 	if object.Death then replaceSprite("_death") end
 	if object.Submerged then replaceSprite("_Bw") end
 	
+	-- ADD PORTRAITS
+	
 	if object.Portrait then 
 		if object.Portrait then
 			modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."1.png",mod.resourcePath.."/"..path.."/"..object.Portrait..".png") 
@@ -78,9 +80,9 @@ local function setUpVek(mod,object)
 			end
 		end
 		if object.HasBoss then
-			if object.HasBoss == 2 then
+			if object.HasBoss == 1 then
 				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait.."_boss.png")
-			elseif object.HasBoss == 1 then
+			elseif object.HasBoss == 2 then
 				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait.."_alpha.png")
 			else
 				modApi:appendAsset("img/portraits/enemy/"..object.Portrait.."B.png",mod.resourcePath.."/"..path.."/"..object.Portrait..".png")
