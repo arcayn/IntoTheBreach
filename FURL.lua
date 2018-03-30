@@ -67,11 +67,11 @@ local function setUpVek(mod,object)
 	if object.Submerged then replaceSprite("_Bw") end
 	
 	if object.Portrait then 
-		if object.PawnName then
-			modApi:appendAsset("img/"..innerPath.."/"..object.PawnName.."1.png",mod.resourcePath.."/portraits/enemy/"..object.PawnName.."1.png") 
+		if object.Portrait then
+			modApi:appendAsset("img/"..innerPath.."/"..object.Portrait.."1.png",mod.resourcePath.."/portraits/enemy/"..object.Portrait.."1.png") 
 		end
 		if object.HasAlpha then
-			modApi:appendAsset("img/"..innerPath.."/"..object.PawnName.."2.png",mod.resourcePath.."/portraits/enemy/"..object.PawnName.."2.png")
+			modApi:appendAsset("img/"..innerPath.."/"..object.Portrait.."2.png",mod.resourcePath.."/portraits/enemy/"..object.Portrait.."2.png")
 		end
 	end
 	
