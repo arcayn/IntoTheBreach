@@ -119,7 +119,7 @@ local function setUpVek(mod,object)
 	
 	-- DEAL WITH CUSTOM ANIMS
 	
-	for index, value in ipairs(object) do
+	for index, value in pairs(object) do
 		if standards[index] then 
 		else
 			replaceSprite("_"..index)
