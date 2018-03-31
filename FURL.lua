@@ -50,7 +50,24 @@ local function setUpVek(mod,object)
 	local filename = object.Filename
 	local path = object.Path or "units"
 	local innerPath = object.ResourcePath or "units/aliens"
-	local height = object.Height or 3
+	local height = object.Height or 3;
+	
+	local standards = {
+		Default = true, 
+		Animated = true, 
+		Death  = true, 
+		Submerged = true, 
+		Name = true, 
+		Filename = true, 
+		Path = true, 
+		ResourcePath = true,
+		Emerge = true,
+		Height = true,
+		Portrait = true,
+		HasAlpha = true,
+		HasBoss = true,
+		Type = true,
+	};
 	
 	-- SET UP RESOURCE LOADING
 	
@@ -100,6 +117,16 @@ local function setUpVek(mod,object)
 		return obj
 	end
 	
+	-- DEAL WITH CUSTOM ANIMS
+	
+	for index, value in ipairs(object) do
+		if standards[index] then 
+		else
+			replaceSprite("_"..index)
+			ANIMS[name.."_"..index] = ANIMS.EnemyUnit:new(addImage(value,"_"..index))
+		end
+	end
+	
 	local function addDeath(obj, addition)
 		obj.NumFrames = obj.NumFrames or 8
 		obj.Time = obj.Time or 0.14
@@ -126,12 +153,45 @@ function setUpMech(mod, object)
 	local name = object.Name
 	local filename = object.Filename
 	local path = object.Path or "units"
-	local innerPath = object.ResourcePath or "units/player"
+	local innerPath = object.ResourcePath or "units/player";
+	
+	local standards = {
+		Default = true, 
+		Animated = true, 
+		Broken = true,
+		Icon = true, 
+		Death  = true, 
+		Submerged = true, 
+		SubmergedBroken = true, 
+		Name = true, 
+		Filename = true, 
+		Path = true, 
+		ResourcePath = true,
+		Type = true,
+	};
 	
 	-- SET UP RESOURCE LOADING
 	
 	local function replaceSprite(addition)
 		modApi:appendAsset("img/"..innerPath.."/"..filename..addition..".png",mod.resourcePath.."/"..path.."/"..filename..addition..".png")
+	end
+	
+	-- MODIFY OBJECTS
+	
+	local function addImage(obj, addition)
+		if obj == nil then obj = {} end
+		obj.Image = innerPath.."/"..filename..addition..".png"
+		return obj
+	end
+	
+	-- DEAL WITH CUSTOM ANIMS
+	
+	for index, value in pairs(object) do
+		if standards[index] then 
+		else
+			replaceSprite("_"..index)
+			ANIMS[name.."_"..index] = ANIMS.MechUnit:new(addImage(value,"_"..index))
+		end
 	end
 	
 	-- LOAD
@@ -144,14 +204,6 @@ function setUpMech(mod, object)
 	if object.Death then replaceSprite("_death") end
 	if object.Submerged then replaceSprite("_w") end
 	if object.SubmergedBroken then replaceSprite("_w_broken") end
-	
-	-- MODIFY OBJECTS
-	
-	local function addImage(obj, addition)
-		if obj == nil then obj = {} end
-		obj.Image = innerPath.."/"..filename..addition..".png"
-		return obj
-	end
 	
 	-- LOAD ANIMATIONS
 	
