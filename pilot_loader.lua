@@ -1,3 +1,35 @@
+if PilotSkils == nil then
+
+PilotSkills = {
+	Disable_Immunity = PilotSkill("Evasion","Mech unaffected by Webbing and Smoke."),
+	Extra_XP = PilotSkill("Experienced","Gain +2 bonus XP\nper kill."),
+	Self_Shield = PilotSkill("Starting Shield","Mech starts every mission with a Shield."),
+	Road_Runner = PilotSkill("Maneuverable","Mech can move through enemy units."),
+	Shifty = PilotSkill("Sidestep","After attacking, gain 1 free tile movement."),
+	Deploy_Anywhere = PilotSkill("Preemptive Strike", "Deploy anywhere on the map, damaging adjacent enemies."),
+	Survive_Death = PilotSkill("Vek", "Normal Pilots cannot be equipped. Loses 25 XP when the unit is disabled."),
+	Pain_Immunity = PilotSkill("Cauterize", "Fire heals instead of damaging Mech."),
+	Power_Repair = PilotSkill("Frenzied Repair", "Push adjacent tiles when repairing."),
+	Freeze_Walk = PilotSkill("Frozen Stance", "Stopping on any liquid tile freezes it, making it safe to stand on."),
+	Armored = PilotSkill("Armored", "Mech gains Armored."),
+	Flying = PilotSkill("Flying", "Mech gains Flying."),
+	Double_Shot = PilotSkill("Double Shot", "Mech can act twice if it does not move."),
+	Post_Move = PilotSkill("Fire-and-Forget", "Move again after shooting."),
+	Youth_Move = PilotSkill("Impulsive", "Gain +3 Move on first turn of every mission."),
+	Retaliation = PilotSkill("Retaliation", "Deal 1 damage to adjacent enemies after surviving damage."),
+	TimeTravel = PilotSkill("Temporal Reset", "Gain 1 extra 'Reset Turn' every battle."),
+	Mantis_Skill = PilotSkill("Mantis", "2 damage melee attack replaces Repair."),
+	Rock_Skill = PilotSkill("Rockman", "+3 Health and\nImmune to Fire."),
+	Zoltan_Skill = PilotSkill("Zoltan", "+1 Reactor Core.\nReduce Mech HP to 1.\nGain Shield every turn."),
+	Road = PilotSkill("Zoltan", "+1 Reactor Core.\nReduce Mech HP to 1.\nGain Shield every turn."),
+}
+end
+
+function GetSkillInfo(skill)
+	if skill == "" then return PilotSkill() end
+	return PilotSkills[skill]
+end
+
 local ftcsv = dofile(GetWorkingDir().."scripts/personalities/ftcsv.lua") -- script for parsing csv file
 
 local function split(str, pat)
@@ -174,9 +206,12 @@ return function(mod, object)
 		Rarity = rarity,
 	}
 	
-	if rarity ~= 0 then
-		PilotList[#PilotList+1] = pilotID
+	if object.CustomSkill then
+		PilotSkills[skill] = object.CustomSkill
 	end
+	
+		PilotList[#PilotList+1] = pilotID
+	
 	
 	-- ADD TO RECRUITS
 	LOG(pilotID..sex..skill..personality..name..powerCost)
