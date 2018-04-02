@@ -160,21 +160,28 @@ return function(mod, object)
 	
 	-- CREATE THE PILOT
 	
-	CreatePilot{
-		Id = pilotID,
+	local realPortrait = pathAdd.."/"..pilotID
+	local realVoice = "/voice/"..voice
+	
+	_G[pilotID] = Pilot:new{
 		Sex = sex,
 		Skill = skill,
 		Personality = personality,
 		PowerCost = powerCost,
 		Name = name,
-		Voice = "/voice/"..voice,
-		Portrait = pathAdd.."/"..pilotID,
-		Rarity = rarity
+		Voice = realVoice,
+		Portrait = realPortrait,
+		Rarity = rarity,
 	}
 	
-	-- ADD TO RECRUITS
+	if rarity ~= 0 then
+		PilotList[#PilotList+1] = pilotID
+	end
 	
+	-- ADD TO RECRUITS
+	LOG(pilotID..sex..skill..personality..name..powerCost)
 	if isRecruit then
+
 		table.insert(Pilot_Recruits, pilotID)
 	end
 	
