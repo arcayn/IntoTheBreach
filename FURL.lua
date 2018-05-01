@@ -9,7 +9,6 @@ while z do
 	if newColor == nil then
 		z = false
 	else
-		LOG(x)
 		table.insert(color_maps, newColor)
 	end
 end
